@@ -1,0 +1,22 @@
+cameraServer.sock
+.venv/
+__pycache__/
+
+# YOLO model weights etc
+*yolov8n.pt
+*yolov8s-world.pt
+*yolov8n-seg.pt
+*yolov8n_ncnn_model/
+*yolov8n.torchscript
+
+# db instance folder
+instance/
+
+# saved videos/thumbnails folder
+recordings/
+
+# qr code for mobile access
+src/static/qr_img.png
+
+# unknown log file? that is generated
+.lgd-nfy0

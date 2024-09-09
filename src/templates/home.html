@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+  <header>
+    <h1>Home</h1>
+  </header>
+  <main>
+    <!-- live stream section -->
+    <article class="centered-article">
+      <h3>Live Stream</h3>
+
+      <div id="loading-indicator" class="loading-spinner">
+        <div aria-busy="true"></div>
+      </div>
+
+      <img id="camera-feed" src="{{ url_for('home.video_feed') }}" style="display: none;">
+    </article>
+
+    <!-- servo control section -->
+    <article class="centered-article">
+      <h3>Camera control</h3>
+      <button class="move control-btn" id='up'>
+        <i class="ph ph-arrow-up"></i>
+      </button>
+
+      <div style="display: flex; flex-direction: row;">
+        <button class="move control-btn" id='left'>
+          <i class="ph ph-arrow-left"></i>
+        </button>
+        <button class="move control-btn" id='home'>
+          <i class="ph ph-house"></i>
+        </button>
+        <button class="move control-btn" id='right'>
+          <i class="ph ph-arrow-right"></i>
+        </button>
+      </div>
+      <button class="move control-btn" id='down'><i class="ph ph-arrow-down"></i></button>
+    </article>
+  </main>
+</div>
+
+<script>
+
+  const camFeed = document.getElementById('camera-feed');
+  const loadingIndicator = document.getElementById('loading-indicator');
+
+  camFeed.onload = function () {
+
+    // Hide the loading spinner and show the image
+    loadingIndicator.style.display = 'none';
+    camFeed.style.display = 'block';
+  }
+
+  const moveButtons = document.querySelectorAll(".move");
+  moveButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      fetch(`/${btn.id}`)
+    })
+  })
+</script>
+{% endblock %}

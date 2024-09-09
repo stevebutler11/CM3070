@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Saved{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <main>
+    <header>
+      <h1>Saved</h1>
+    </header>
+
+    <h3>Saved movement detection recordings</h3>
+
+    <div class="recordings">
+      <!-- iterate recordings -->
+      {% for r in recordings %}
+      <a href="/saved/player/{{ r.id }}">
+        <article class="recording centered-article">
+          <img src="{{ url_for('static', filename='recordings/' + r.thumbnailTitle) }}" />
+          <p class="recording-text">{{ r.snippetTitle }}</p>
+        </article>
+      </a>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <h1>Settings</h1>
+    </header>
+
+    <!-- section with email addresses to notify when movement detected -->
+    <article class="centered-article">
+        <h3>Emails to notify</h3>
+        <p>Add emails below that should be notified on detection of movement</p>
+        <form method="POST" action="{{ url_for('settings.settings') }}">
+            <fieldset role="group">
+                <input type="email" name="email" placeholder="Enter the email" autocomplete="email" />
+                <input type="submit" value="Add email" name="emails_form" />
+            </fieldset>
+        </form>
+        <ul>
+            {% for r in recipients %}
+            <li class="no-bullet">
+                {{ r.emailAddress }}
+                <a class="delete-button" href="{{ url_for('settings.settings_delete', id=r.id) }}"><i id="{{ r.id }}"
+                        class="ph ph-x"></i></a>
+            </li>
+            {% endfor %}
+        </ul>
+    </article>
+
+    <!-- section with form for models to choose -->
+    <article class="centered-article">
+        <h3>Models to choose</h3>
+        <p>Select your surveillance machine learning model from below:</p>
+        <form method="POST" action="{{ url_for('settings.settings') }}">
+            <select name="ml_selector" aria-label="Select your ml model..." required>
+                <option {% if k == selected_model %} selected {% endif %} disabled value="">
+                    Select your model...
+                </option>
+                {% for k, v in models_dict.items() %}
+                <option {% if k == selected_model %} selected {% endif %} value={{k}}>{{v['dropdown_name']}}</option>
+                {% endfor %}
+            </select>
+            <br />
+            <button type="submit" name="models_form">Update</button>
+        </form>
+    </article>
+
+    <!-- section with form for checklist of labels to detect -->
+    <article class="centered-article">
+        <h3>Objects to detect</h3>
+        <p>Select from the list of elements below, what objects should be observed by the surveillance system for
+            movement detection</p>
+        <form method="POST" action="{{ url_for('settings.settings') }}">
+            <div class="objects">
+                {% for k, v in coco_names.items() %}
+                <div class="object">
+                    <input name="{{k}}" type="checkbox" id="{{k}}" {% if v %} checked {% endif %} />
+                    <label for="{{k}}">{{k}}</label>
+                </div>
+                {% endfor %}
+            </div>
+            <br />
+            <button type="submit" name="objects_form">Update</button>
+        </form>
+    </article>
+</div>
+
+<script>
+
+    const modelsFormButton = document.querySelector("button[name='models_form']");
+    const objectsFormButton = document.querySelector("button[name='objects_form']");
+
+    const setBusy = (event) => {
+        event.target.setAttribute("aria-busy", "true");
+    }
+
+    // Add event listeners to the buttons
+    modelsFormButton.addEventListener("click", setBusy);
+    objectsFormButton.addEventListener("click", setBusy);
+</script>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+body {
+    height: 100vh;
+}
+
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+h1 {
+    color: var(--pico-color-sand);
+}
+
+.centered-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /* width: 100%; */
+}
+
+nav {
+    padding: 8px 32px;
+}
+
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.no-bullet {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.control-btn {
+    margin: 16px;
+}
+
+.object {
+    padding: 4px;
+}
+
+.recording {
+    margin: 4px;
+    padding: 4px;
+}
+
+.recording-text {
+    font-size: 0.7rem;
+}
+
+.objects {
+    margin: 0 auto;
+    display: grid;
+}
+
+.recordings {
+    margin: 0 auto;
+    display: grid;
+}
+
+.delete-button {
+    color: red;
+}
+
+@media (min-width: 600px) {
+    .objects { grid-template-columns: repeat(3, 1fr); }
+    .recordings { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+    .objects { grid-template-columns: repeat(5, 1fr); }
+    .recordings { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1200px) {
+    .objects { grid-template-columns: repeat(7, 1fr); }
+    .recordings { grid-template-columns: repeat(4, 1fr); }
+}

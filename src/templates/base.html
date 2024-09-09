@@ -1,0 +1,62 @@
+<!doctype html>
+<title>SB Surveillance - {% block title %}{% endblock %}</title>
+
+<!-- pico css -->
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.sand.min.css' />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css' />
+<!-- phosphor icons -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+<body>
+  <!-- nav bar -->
+  <nav>
+    <ul>
+      <li><strong>SB Surveillance</strong></li>
+    </ul>
+    <ul>
+      <li><a href="{{ url_for('home.index') }}">Home</a></li>
+      <li><a href="{{ url_for('saved.saved') }}">Saved</a></li>
+      <li><a href="{{ url_for('settings.settings') }}">Settings</a></li>
+      <li><a id="themeSwitch"><i id="themeSwitchIcon" class="ph ph-sun"></i></a></li>
+    </ul>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <script>
+    const themeBtn = document.getElementById('themeSwitch');
+    const themeBtnIcon = document.getElementById('themeSwitchIcon');
+
+    const setToggleButton = (newTheme) => {
+      if (newTheme === "light") {
+        themeBtnIcon.classList.remove("ph-sun");
+        themeBtnIcon.classList.add("ph-moon");
+      } else {
+        themeBtnIcon.classList.remove("ph-moon");
+        themeBtnIcon.classList.add("ph-sun");
+      }
+    }
+
+    themeBtn.addEventListener("click", (e) => {
+      fetch('/toggletheme', { method: 'POST' })
+        .then(async (req) => {
+          req.json().then((jsonVal) => {
+            const newTheme = jsonVal.newTheme;
+            document.documentElement.setAttribute('data-theme', newTheme);
+            console.log(newTheme)
+            setToggleButton(newTheme);
+          })
+        });
+    })
+
+    // On page load, apply the theme passed from Flask
+    document.addEventListener("DOMContentLoaded", () => {
+      document.documentElement.setAttribute('data-theme', "{{ theme }}");
+      setToggleButton("{{ theme }}")
+    })
+
+  </script>
+</body>

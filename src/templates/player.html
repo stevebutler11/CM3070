@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Player{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <main>
+    <header>
+      <h1>Recording Player</h1>
+    </header>
+
+    <article class="centered-article">
+      <video controls>
+        <source src="{{ url_for('static', filename='recordings/' + video_title) }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <table style="margin: 16px;">
+        <tbody>
+          <tr>
+            <td>Title:</td>
+            <td>{{ video_title }}</td>
+          </tr>
+          <tr>
+            <td>Date:</td>
+            <td>{{ date }}</td>
+          </tr>
+          <tr>
+            <td>Time:</td>
+            <td>{{ time }}</td>
+          </tr>
+          <tr>
+            <td>Comments:</td>
+            <td>{{ description }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a
+        href="{{ url_for('saved.delete_recording', video_id=video_id) }}"><button>delete</button></a>
+    </article>
+  </main>
+</div>
+{% endblock %}
